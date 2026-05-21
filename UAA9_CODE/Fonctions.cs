@@ -171,5 +171,36 @@ namespace UAA9_CODE
             Console.WriteLine("Appuyez sur Entrée pour continuer...");
             Console.ReadLine();
         }
+        // =======================================
+        // VERIFICATION SI UN DOMINO EST VALIDE
+        // =======================================
+        // =======================================
+        // VERIFICATION SI UN DOMINO EST VALIDE
+        // =======================================
+
+        public static bool dominoValide(string domino, string[] table, int nbDominosTable)
+        {
+            if (nbDominosTable == 0)
+            {
+                return true;
+            }
+
+            int gaucheTable = int.Parse(table[0][1].ToString());
+            int droiteTable = int.Parse(table[nbDominosTable - 1][3].ToString());
+
+            int gaucheDomino = int.Parse(domino[1].ToString());
+            int droiteDomino = int.Parse(domino[3].ToString());
+
+            if (gaucheDomino == gaucheTable ||
+                droiteDomino == gaucheTable ||
+                gaucheDomino == droiteTable ||
+                droiteDomino == droiteTable)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 }
