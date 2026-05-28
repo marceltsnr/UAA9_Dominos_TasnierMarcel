@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" version="3.24" text="&#34;placerDomino&#34;" comment="&#34;&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<alternative text="&#34;if (nbDominosTable == 0)&#34;" comment="&#34;&#34;" color="ffffff">
+			<qTrue>
+				<instruction text="&#34;table[0] = domino&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+				<instruction text="&#34;nbDominosTable++&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+			</qTrue>
+			<qFalse>
+			</qFalse>
+		</alternative>
+		<alternative text="&#34;if (droiteDomino == gaucheTable)&#34;" comment="&#34;&#34;" color="80ff80">
+			<qTrue>
+				<for text="&#34;for (int i = nbDominosTable; i &#62; 0; i--)&#34;" comment="&#34;&#34;" counterVar="dummy_counter" startValue="for (int i == nbDominosTable; i &#62; 0; i--)" stepConst="1" reliable="false" color="80ff80">
+					<qFor>
+						<instruction text="&#34;table[i] = table[i - 1]&#34;" comment="&#34;&#34;" color="80ff80" rotated="0"></instruction>
+					</qFor>
+				</for>
+				<instruction text="&#34;table[0] = dominoInverse&#34;" comment="&#34;&#34;" color="80ff80" rotated="0"></instruction>
+				<instruction text="&#34; nbDominosTable++&#34;" comment="&#34;&#34;" color="80ff80" rotated="0"></instruction>
+			</qTrue>
+			<qFalse>
+			</qFalse>
+		</alternative>
+		<alternative text="&#34; if (gaucheDomino == gaucheTable)&#34;" comment="&#34;&#34;" color="0080ff">
+			<qTrue>
+				<instruction text="&#34;dominoInverse = &#34;&#34;[&#34;&#34; + droiteDomino + &#34;&#34;|&#34;&#34; + gaucheDomino + &#34;&#34;]&#34;&#34;&#34;" comment="&#34;&#34;" color="0080ff" rotated="0"></instruction>
+				<for text="&#34;for (int i = nbDominosTable; i &#62; 0; i--)&#34;" comment="&#34;&#34;" counterVar="dummy_counter" startValue="for (int i == nbDominosTable; i &#62; 0; i--)" stepConst="1" reliable="false" color="0080ff">
+					<qFor>
+						<instruction text="&#34;table[i] = table[i - 1];&#34;" comment="&#34;&#34;" color="0080ff" rotated="0"></instruction>
+					</qFor>
+				</for>
+				<instruction text="&#34;table[0] = dominoInverse&#34;,&#34;nbDominosTable++&#34;" comment="&#34;&#34;" color="0080ff" rotated="0"></instruction>
+			</qTrue>
+			<qFalse>
+			</qFalse>
+		</alternative>
+		<alternative text="&#34;if (gaucheDomino == droiteTable)&#34;" comment="&#34;&#34;" color="ff80c0">
+			<qTrue>
+				<instruction text="&#34;table[nbDominosTable] = domino&#34;,&#34;nbDominosTable++&#34;" comment="&#34;&#34;" color="ff80c0" rotated="0"></instruction>
+			</qTrue>
+			<qFalse>
+			</qFalse>
+		</alternative>
+		<alternative text="&#34;if (droiteDomino == droiteTable)&#34;" comment="&#34;&#34;" color="ff8080">
+			<qTrue>
+				<instruction text="&#34;dominoInverse = &#34;&#34;[&#34;&#34; + droiteDomino + &#34;&#34;|&#34;&#34; + gaucheDomino + &#34;&#34;]&#34;&#34;&#34;" comment="&#34;&#34;" color="ff8080" rotated="0"></instruction>
+				<instruction text="&#34;table[nbDominosTable] = dominoInverse&#34;" comment="&#34;&#34;" color="ff8080" rotated="0"></instruction>
+				<instruction text="&#34;nbDominosTable++&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+			</qTrue>
+			<qFalse>
+			</qFalse>
+		</alternative>
+	</children>
+</root>

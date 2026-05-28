@@ -30,10 +30,6 @@ namespace UAA9_CODE
                 string[] pseudosPris = new string[4];
                 int nbPseudosPris = 0;
 
-                // =======================================
-                // PSEUDO HUMAIN
-                // =======================================
-
                 string pseudoHumain = Fonctions.choisirPseudo(
                     pseudosDisponibles,
                     pseudosPris,
@@ -41,20 +37,12 @@ namespace UAA9_CODE
                     generateur
                 );
 
-                // =======================================
-                // TUTORIEL
-                // =======================================
-
                 Console.WriteLine("\nVoulez-vous voir le tutoriel du jeu ? (o/n)");
 
                 if (Console.ReadLine().ToLower() == "o")
                 {
                     Fonctions.afficherTutoriel();
                 }
-
-                // =======================================
-                // NOMBRE DE ROBOTS
-                // =======================================
 
                 int nombreRobots;
 
@@ -67,10 +55,6 @@ namespace UAA9_CODE
                     || nombreRobots < 1
                     || nombreRobots > 3
                 );
-
-                // =======================================
-                // NIVEAU ROBOTS
-                // =======================================
 
                 int niveauRobots;
 
@@ -89,10 +73,6 @@ namespace UAA9_CODE
 
                 Console.WriteLine("\nNiveau choisi : " + niveauRobots);
 
-                // =======================================
-                // PSEUDOS ROBOTS
-                // =======================================
-
                 string[] pseudosRobots = Fonctions.attribuerPseudosRobots(
                     pseudosDisponibles,
                     pseudosPris,
@@ -101,23 +81,10 @@ namespace UAA9_CODE
                     generateur
                 );
 
-                // =======================================
-                // TALON
-                // =======================================
-
                 string[] talon = Fonctions.creationTalon();
                 Fonctions.melangeAleatoire(talon);
 
-                // =======================================
-                // CREATION DES MAINS
-                // =======================================
-
-                int dominosParJoueur;
-
-                if (nombreRobots + 1 == 2)
-                    dominosParJoueur = 7;
-                else
-                    dominosParJoueur = 6;
+                int dominosParJoueur = (nombreRobots + 1 == 2) ? 7 : 6;
 
                 string[] mainJoueur = new string[7];
                 int nbDominosJoueur = dominosParJoueur;
@@ -128,35 +95,24 @@ namespace UAA9_CODE
 
                 for (int i = 0; i < dominosParJoueur; i++)
                 {
-                    mainJoueur[i] = talon[indexDistribution];
-                    indexDistribution++;
+                    mainJoueur[i] = talon[indexDistribution++];
                 }
 
                 for (int robot = 0; robot < nombreRobots; robot++)
                 {
                     for (int i = 0; i < dominosParJoueur; i++)
                     {
-                        mainsRobots[robot, i] = talon[indexDistribution];
-                        indexDistribution++;
+                        mainsRobots[robot, i] = talon[indexDistribution++];
                     }
                 }
-
-                // =======================================
-                // TALON RESTANT
-                // =======================================
 
                 string[] talonRestant = new string[28];
                 int nbDominosTalon = 0;
 
                 for (int i = indexDistribution; i < talon.Length; i++)
                 {
-                    talonRestant[nbDominosTalon] = talon[i];
-                    nbDominosTalon++;
+                    talonRestant[nbDominosTalon++] = talon[i];
                 }
-
-                // =======================================
-                // AFFICHAGE DES MAINS
-                // =======================================
 
                 Console.WriteLine("\n=== Distribution ===\n");
 
@@ -172,14 +128,10 @@ namespace UAA9_CODE
                     Console.WriteLine(pseudosRobots[robot] + " :");
 
                     for (int i = 0; i < dominosParJoueur; i++)
-                        Console.Write(mainJoueur[i] + " ");
+                        Console.Write(mainsRobots[robot, i] + " ");
 
                     Console.WriteLine("\n");
                 }
-
-                // =======================================
-                // TABLE DE JEU
-                // =======================================
 
                 string[] table = new string[28];
                 int nbDominosTable = 0;
@@ -193,21 +145,54 @@ namespace UAA9_CODE
                 nbDominosJoueur--;
 
                 // =======================================
-                // AFFICHAGE MAIN (remplacement de la fonction afficherMain)
+                // PLACER UN DOMINO
                 // =======================================
 
-                Console.WriteLine("=== VOS DOMINOS ===");
-
-                for (int i = 0; i < nbDominosJoueur; i++)
+                void placerDomino(string domino, string[] table, ref int nbDominosTable)
                 {
-                    Console.WriteLine(i + " : " + mainJoueur[i]);
+                    if (nbDominosTable == 0)
+                    {
+                        table[0] = domino;
+                        nbDominosTable++;
+                        return;
+                    }
+
+                    int gaucheTable = int.Parse(table[0][1].ToString());
+                    int droiteTable = int.Parse(table[nbDominosTable - 1][3].ToString());
+
+                    int gaucheDomino = int.Parse(domino[1].ToString());
+                    int droiteDomino = int.Parse(domino[3].ToString());
+
+                    if (droiteDomino == gaucheTable)
+                    {
+                        for (int i = nbDominosTable; i > 0; i--)
+                            table[i] = table[i - 1];
+
+                        table[0] = domino;
+                        nbDominosTable++;
+                    }
+                    else if (gaucheDomino == gaucheTable)
+                    {
+                        string dominoInverse = "[" + droiteDomino + "|" + gaucheDomino + "]";
+
+                        for (int i = nbDominosTable; i > 0; i--)
+                            table[i] = table[i - 1];
+
+                        table[0] = dominoInverse;
+                        nbDominosTable++;
+                    }
+                    else if (gaucheDomino == droiteTable)
+                    {
+                        table[nbDominosTable] = domino;
+                        nbDominosTable++;
+                    }
+                    else if (droiteDomino == droiteTable)
+                    {
+                        string dominoInverse = "[" + droiteDomino + "|" + gaucheDomino + "]";
+                        table[nbDominosTable] = dominoInverse;
+                        nbDominosTable++;
+                    }
                 }
-
-                Console.WriteLine();
-
-                // =======================================
-                // FIN DE PARTIE
-                // =======================================
 
                 bool partieTerminee = false;
 
@@ -215,7 +200,6 @@ namespace UAA9_CODE
                 {
                     Console.Clear();
 
-                    // remplacement de afficherTable
                     Console.WriteLine("\n=== TABLE DE JEU ===");
 
                     for (int i = 0; i < nbDominosTable; i++)
@@ -228,8 +212,7 @@ namespace UAA9_CODE
 
                     Console.WriteLine("\n");
 
-                    // main joueur
-                    Console.WriteLine("=== VOS DOMINOS ===");
+                    Console.WriteLine("=== VOTRE MAIN ===");
 
                     for (int i = 0; i < nbDominosJoueur; i++)
                         Console.WriteLine(i + " : " + mainJoueur[i]);

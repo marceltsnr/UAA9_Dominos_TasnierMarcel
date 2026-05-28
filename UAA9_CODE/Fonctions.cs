@@ -258,6 +258,68 @@ namespace UAA9_CODE
             Console.WriteLine();
         }
 
+        // =======================================
+        // PLACER UN DOMINO
+        // =======================================
+
+        /// <summary>
+        /// Place un domino sur la table de jeu, à gauche ou à droite selon la correspondance des valeurs.
+        /// Si nécessaire, le domino est retourné avant d'être posé.
+        /// </summary>
+        /// <param name="domino">Le domino à placer, sous la forme "[x|y]".</param>
+        /// <param name="table">Le tableau représentant la table de jeu.</param>
+        /// <param name="nbDominosTable">Le nombre de dominos actuellement sur la table (mis à jour par référence).</param>
+        public static void placerDomino(string domino, string[] table, ref int nbDominosTable)
+        {
+            if (nbDominosTable == 0)
+            {
+                table[0] = domino;
+                nbDominosTable++;
+                return;
+            }
+
+            int gaucheTable = int.Parse(table[0][1].ToString());
+            int droiteTable = int.Parse(table[nbDominosTable - 1][3].ToString());
+
+            int gaucheDomino = int.Parse(domino[1].ToString());
+            int droiteDomino = int.Parse(domino[3].ToString());
+
+            // Placement à gauche : décalage du tableau vers la droite
+            if (droiteDomino == gaucheTable)
+            {
+                for (int i = nbDominosTable; i > 0; i--)
+                {
+                    table[i] = table[i - 1];
+                }
+                table[0] = domino;
+                nbDominosTable++;
+            }
+            else if (gaucheDomino == gaucheTable)
+            {
+                string dominoInverse = "[" + droiteDomino + "|" + gaucheDomino + "]";
+
+                for (int i = nbDominosTable; i > 0; i--)
+                {
+                    table[i] = table[i - 1];
+                }
+
+                table[0] = dominoInverse;
+                nbDominosTable++;
+            }
+            // Placement à droite
+            else if (gaucheDomino == droiteTable)
+            {
+                table[nbDominosTable] = domino;
+                nbDominosTable++;
+            }
+            else if (droiteDomino == droiteTable)
+            {
+                string dominoInverse = "[" + droiteDomino + "|" + gaucheDomino + "]";
+
+                table[nbDominosTable] = dominoInverse;
+                nbDominosTable++;
+            }
+        }
 
     }
 }
