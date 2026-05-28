@@ -236,5 +236,28 @@ namespace UAA9_CODE
             Console.WriteLine("\n");
         }
 
+
+        // =======================================
+        // AFFICHER LA MAIN DU JOUEUR
+        // =======================================
+
+        /// <summary>
+        /// Affiche dans la console les dominos en main d'un joueur, avec leur indice.
+        /// </summary>
+        /// <param name="mainJoueur">Le tableau des dominos en main du joueur.</param>
+        /// <param name="nbDominosMain">Le nombre de dominos actuellement en main.</param>
+        public static void afficherMain(string[] mainJoueur, int nbDominosMain)
+        {
+            Console.WriteLine("=== VOS DOMINOS ===");
+
+            for (int i = 0; i < nbDominosMain; i++)
+            {
+                Console.WriteLine(i + " : " + mainJoueur[i]);
+            }
+
+            Console.WriteLine();
+        }
+
+
     }
 }

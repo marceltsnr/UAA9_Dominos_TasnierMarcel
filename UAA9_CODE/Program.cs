@@ -106,7 +106,6 @@ namespace UAA9_CODE
                 // =======================================
 
                 string[] talon = Fonctions.creationTalon();
-
                 Fonctions.melangeAleatoire(talon);
 
                 // =======================================
@@ -116,13 +115,9 @@ namespace UAA9_CODE
                 int dominosParJoueur;
 
                 if (nombreRobots + 1 == 2)
-                {
                     dominosParJoueur = 7;
-                }
                 else
-                {
                     dominosParJoueur = 6;
-                }
 
                 string[] mainJoueur = new string[7];
                 int nbDominosJoueur = dominosParJoueur;
@@ -131,15 +126,11 @@ namespace UAA9_CODE
 
                 int indexDistribution = 0;
 
-                // Distribution au joueur humain
-
                 for (int i = 0; i < dominosParJoueur; i++)
                 {
                     mainJoueur[i] = talon[indexDistribution];
                     indexDistribution++;
                 }
-
-                // Distribution aux robots
 
                 for (int robot = 0; robot < nombreRobots; robot++)
                 {
@@ -172,20 +163,16 @@ namespace UAA9_CODE
                 Console.WriteLine(pseudoHumain + " :");
 
                 for (int i = 0; i < nbDominosJoueur; i++)
-                {
-                    Console.Write(mainJoueur[i] + " ");
-                }
+                    Console.WriteLine(i + " : " + mainJoueur[i]);
 
-                Console.WriteLine("\n");
+                Console.WriteLine();
 
                 for (int robot = 0; robot < nombreRobots; robot++)
                 {
                     Console.WriteLine(pseudosRobots[robot] + " :");
 
                     for (int i = 0; i < dominosParJoueur; i++)
-                    {
-                        Console.Write(mainsRobots[robot, i] + " ");
-                    }
+                        Console.Write(mainJoueur[i] + " ");
 
                     Console.WriteLine("\n");
                 }
@@ -201,11 +188,22 @@ namespace UAA9_CODE
                 nbDominosTable++;
 
                 for (int i = 0; i < nbDominosJoueur - 1; i++)
-                {
                     mainJoueur[i] = mainJoueur[i + 1];
-                }
 
                 nbDominosJoueur--;
+
+                // =======================================
+                // AFFICHAGE MAIN (remplacement de la fonction afficherMain)
+                // =======================================
+
+                Console.WriteLine("=== VOS DOMINOS ===");
+
+                for (int i = 0; i < nbDominosJoueur; i++)
+                {
+                    Console.WriteLine(i + " : " + mainJoueur[i]);
+                }
+
+                Console.WriteLine();
 
                 // =======================================
                 // FIN DE PARTIE
@@ -217,14 +215,24 @@ namespace UAA9_CODE
                 {
                     Console.Clear();
 
-                    Fonctions.afficherTable(table, nbDominosTable);
+                    // remplacement de afficherTable
+                    Console.WriteLine("\n=== TABLE DE JEU ===");
 
-                    Console.WriteLine("Votre main :");
+                    for (int i = 0; i < nbDominosTable; i++)
+                    {
+                        Console.Write(table[i]);
+
+                        if (i < nbDominosTable - 1)
+                            Console.Write(" - ");
+                    }
+
+                    Console.WriteLine("\n");
+
+                    // main joueur
+                    Console.WriteLine("=== VOS DOMINOS ===");
 
                     for (int i = 0; i < nbDominosJoueur; i++)
-                    {
-                        Console.Write(i + " : " + mainJoueur[i] + "  ");
-                    }
+                        Console.WriteLine(i + " : " + mainJoueur[i]);
 
                     Console.WriteLine();
 
@@ -243,41 +251,28 @@ namespace UAA9_CODE
                         for (int i = 0; i < dominosParJoueur; i++)
                         {
                             if (mainsRobots[robot, i] != null)
-                            {
                                 nbRobot++;
-                            }
                         }
 
                         if (nbRobot == 0)
                         {
-                            Console.WriteLine(
-                                "\n" + pseudosRobots[robot] + " gagne !"
-                            );
-
+                            Console.WriteLine("\n" + pseudosRobots[robot] + " gagne !");
                             robotsVides = true;
                         }
                     }
 
                     if (robotsVides)
-                    {
                         partieTerminee = true;
-                    }
 
                     if (!partieTerminee)
                     {
                         Console.WriteLine("\nTour suivant...");
                         Console.ReadLine();
-
                         partieTerminee = true;
                     }
                 }
 
-                // =======================================
-                // REJOUER
-                // =======================================
-
                 Console.WriteLine("\nVoulez-vous rejouer ? (o/n)");
-
                 reponse = Console.ReadLine().ToLower();
 
             } while (reponse == "o");
