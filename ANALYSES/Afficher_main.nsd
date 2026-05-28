@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" version="3.24" text="&#34;Afficher main&#34;" comment="&#34;&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<for text="&#34;for (int i = 0; i &#60; nbDominosMain; i++)&#34;" comment="&#34;&#34;" counterVar="dummy_counter" startValue="for (int i == 0; i &#60; nbDominosMain; i++)" stepConst="1" reliable="false" color="ffffff">
+			<qFor>
+				<instruction text="&#34;Afficher =&#62; i + &#34;&#34; : &#34;&#34; + mainJoueur[i]&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+			</qFor>
+		</for>
+	</children>
+</root>

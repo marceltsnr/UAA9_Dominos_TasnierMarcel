@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace UAA9_CODE
 {
     internal class Fonctions
@@ -171,13 +172,20 @@ namespace UAA9_CODE
             Console.WriteLine("Appuyez sur Entrée pour continuer...");
             Console.ReadLine();
         }
-        // =======================================
-        // VERIFICATION SI UN DOMINO EST VALIDE
-        // =======================================
+
         // =======================================
         // VERIFICATION SI UN DOMINO EST VALIDE
         // =======================================
 
+        /// <summary>
+        /// Vérifie si un domino donné peut être posé sur la table de jeu.
+        /// Si la table est vide, tout domino est valide.
+        /// Sinon, le domino doit correspondre à l'une des deux extrémités de la table.
+        /// </summary>
+        /// <param name="domino">Le domino à vérifier, sous la forme "[x|y]".</param>
+        /// <param name="table">Le tableau des dominos actuellement sur la table.</param>
+        /// <param name="nbDominosTable">Le nombre de dominos actuellement posés sur la table.</param>
+        /// <returns>True si le domino peut être posé, false sinon.</returns>
         public static bool dominoValide(string domino, string[] table, int nbDominosTable)
         {
             if (nbDominosTable == 0)

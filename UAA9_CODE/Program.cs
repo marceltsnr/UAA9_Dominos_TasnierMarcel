@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace UAA9_CODE
 {
     public class Program
@@ -6,51 +7,247 @@ namespace UAA9_CODE
         public static void Main(string[] args)
         {
             string reponse;
+
             do
             {
                 Console.Clear();
                 Console.WriteLine("=== Jeu de Dominos ===\n");
 
                 Random generateur = new Random();
-                string[] pseudosDisponibles = { "Bob", "Titan", "Bertrand", "Pixel", "Nova", "Luna", "Prout", "Vortex" };
+
+                string[] pseudosDisponibles =
+                {
+                    "Bob",
+                    "Titan",
+                    "Bertrand",
+                    "Pixel",
+                    "Nova",
+                    "Luna",
+                    "Prout",
+                    "Vortex"
+                };
+
                 string[] pseudosPris = new string[4];
                 int nbPseudosPris = 0;
 
-                // Pseudo humain
-                string pseudoHumain = Fonctions.choisirPseudo(pseudosDisponibles, pseudosPris, ref nbPseudosPris, generateur);
+                // =======================================
+                // PSEUDO HUMAIN
+                // =======================================
 
-                // Tutoriel
+                string pseudoHumain = Fonctions.choisirPseudo(
+                    pseudosDisponibles,
+                    pseudosPris,
+                    ref nbPseudosPris,
+                    generateur
+                );
+
+                // =======================================
+                // TUTORIEL
+                // =======================================
+
                 Console.WriteLine("\nVoulez-vous voir le tutoriel du jeu ? (o/n)");
-                if (Console.ReadLine().ToLower() == "o") Fonctions.afficherTutoriel();
 
-                // Nombre de robots
+                if (Console.ReadLine().ToLower() == "o")
+                {
+                    Fonctions.afficherTutoriel();
+                }
+
+                // =======================================
+                // NOMBRE DE ROBOTS
+                // =======================================
+
                 int nombreRobots;
+
                 do
                 {
                     Console.WriteLine("\nCombien de robots dans la partie ? (1 à 3)");
-                } while (!int.TryParse(Console.ReadLine(), out nombreRobots) || nombreRobots < 1 || nombreRobots > 3);
 
-                // Niveau des robots
+                } while (
+                    !int.TryParse(Console.ReadLine(), out nombreRobots)
+                    || nombreRobots < 1
+                    || nombreRobots > 3
+                );
+
+                // =======================================
+                // NIVEAU ROBOTS
+                // =======================================
+
                 int niveauRobots;
+
                 do
                 {
                     Console.WriteLine("\nChoisissez le niveau des robots :");
                     Console.WriteLine("1 - Nul");
                     Console.WriteLine("2 - Moyen");
                     Console.WriteLine("3 - Fort");
-                } while (!int.TryParse(Console.ReadLine(), out niveauRobots) || niveauRobots < 1 || niveauRobots > 3);
-                Console.WriteLine("\nNiveau des robots choisi : " + niveauRobots);
 
-                // Pseudos robots
-                string[] pseudosRobots = Fonctions.attribuerPseudosRobots(pseudosDisponibles, pseudosPris, ref nbPseudosPris, nombreRobots, generateur);
+                } while (
+                    !int.TryParse(Console.ReadLine(), out niveauRobots)
+                    || niveauRobots < 1
+                    || niveauRobots > 3
+                );
 
-                // Talon + distribution
+                Console.WriteLine("\nNiveau choisi : " + niveauRobots);
+
+                // =======================================
+                // PSEUDOS ROBOTS
+                // =======================================
+
+                string[] pseudosRobots = Fonctions.attribuerPseudosRobots(
+                    pseudosDisponibles,
+                    pseudosPris,
+                    ref nbPseudosPris,
+                    nombreRobots,
+                    generateur
+                );
+
+                // =======================================
+                // TALON
+                // =======================================
+
                 string[] talon = Fonctions.creationTalon();
-                Fonctions.melangeAleatoire(talon);
-                Fonctions.distributionCartes(talon, pseudoHumain, pseudosRobots);
 
-                // Rejouer
-                Console.WriteLine("Voulez-vous rejouer ? (o/n)");
+                Fonctions.melangeAleatoire(talon);
+
+                // =======================================
+                // CREATION DES MAINS
+                // =======================================
+
+                int dominosParJoueur;
+
+                if (nombreRobots + 1 == 2)
+                {
+                    dominosParJoueur = 7;
+                }
+                else
+                {
+                    dominosParJoueur = 6;
+                }
+
+                string[] mainJoueur = new string[7];
+                int nbDominosJoueur = dominosParJoueur;
+
+                string[,] mainsRobots = new string[nombreRobots, 7];
+
+                int indexDistribution = 0;
+
+                // Distribution au joueur humain
+
+                for (int i = 0; i < dominosParJoueur; i++)
+                {
+                    mainJoueur[i] = talon[indexDistribution];
+                    indexDistribution++;
+                }
+
+                // Distribution aux robots
+
+                for (int robot = 0; robot < nombreRobots; robot++)
+                {
+                    for (int i = 0; i < dominosParJoueur; i++)
+                    {
+                        mainsRobots[robot, i] = talon[indexDistribution];
+                        indexDistribution++;
+                    }
+                }
+
+                // =======================================
+                // TALON RESTANT
+                // =======================================
+
+                string[] talonRestant = new string[28];
+                int nbDominosTalon = 0;
+
+                for (int i = indexDistribution; i < talon.Length; i++)
+                {
+                    talonRestant[nbDominosTalon] = talon[i];
+                    nbDominosTalon++;
+                }
+
+                // =======================================
+                // AFFICHAGE DES MAINS
+                // =======================================
+
+                Console.WriteLine("\n=== Distribution ===\n");
+
+                Console.WriteLine(pseudoHumain + " :");
+
+                for (int i = 0; i < nbDominosJoueur; i++)
+                {
+                    Console.Write(mainJoueur[i] + " ");
+                }
+
+                Console.WriteLine("\n");
+
+                for (int robot = 0; robot < nombreRobots; robot++)
+                {
+                    Console.WriteLine(pseudosRobots[robot] + " :");
+
+                    for (int i = 0; i < dominosParJoueur; i++)
+                    {
+                        Console.Write(mainsRobots[robot, i] + " ");
+                    }
+
+                    Console.WriteLine("\n");
+                }
+
+                // =======================================
+                // FIN DE PARTIE
+                // =======================================
+
+                bool partieTerminee = false;
+
+                while (!partieTerminee)
+                {
+                    if (nbDominosJoueur == 0)
+                    {
+                        Console.WriteLine("\nVous avez gagné !");
+                        partieTerminee = true;
+                    }
+
+                    bool robotsVides = false;
+
+                    for (int robot = 0; robot < nombreRobots; robot++)
+                    {
+                        int nbRobot = 0;
+
+                        for (int i = 0; i < dominosParJoueur; i++)
+                        {
+                            if (mainsRobots[robot, i] != null)
+                            {
+                                nbRobot++;
+                            }
+                        }
+
+                        if (nbRobot == 0)
+                        {
+                            Console.WriteLine(
+                                "\n" + pseudosRobots[robot] + " gagne !"
+                            );
+
+                            robotsVides = true;
+                        }
+                    }
+
+                    if (robotsVides)
+                    {
+                        partieTerminee = true;
+                    }
+
+                    if (!partieTerminee)
+                    {
+                        Console.WriteLine("\nTour suivant...");
+                        Console.ReadLine();
+
+                        partieTerminee = true;
+                    }
+                }
+
+                // =======================================
+                // REJOUER
+                // =======================================
+
+                Console.WriteLine("\nVoulez-vous rejouer ? (o/n)");
+
                 reponse = Console.ReadLine().ToLower();
 
             } while (reponse == "o");
@@ -59,57 +256,3 @@ namespace UAA9_CODE
         }
     }
 }
-
-/*
-=====================================================
-IDÉES POUR LES ROBOTS
-=====================================================
-1. Robot nul - Comportement simple.
-
-Principe :
-- regarde les dominos qu’il peut jouer
-- en choisit un au hasard
-- Il pioche même s’il peut jouer
-
-2. Robot moyen (plus intelligent)
-- jouer le domino qui correspond le plus souvent dans sa main
-
-Exemple :
-Main du robot :
-6|2
-6|5
-3|6
-Si la table finit par 6,
-il joue un domino avec 6 pour garder le contrôle.
-
-Logique :
-compter les chiffres dans la main
-jouer le domino avec le chiffre le plus fréquent
-
-    Ne pas jouer les doubles trop vite.
-    Exemple :
-    6|6
-    Le robot peut :
-    - garder ce domino pour bloquer plus tard
-
-
-3. Robot fort - Jouer le domino qui donne le moins de possibilités aux autres
-
-Exemple :
-Si la table finit par :
-... 5
-
-Le robot peut jouer :
-5|1
-5|6
-
-Il regarde dans sa main :
-- combien de 1
-- combien de 6
-
-Il joue celui qui est le plus rare.
-
-Logique :
-jouer le domino qui laisse un chiffre rare
-
-*/
