@@ -209,6 +209,32 @@ namespace UAA9_CODE
 
             return false;
         }
+        // =======================================
+        // AFFICHER LA TABLE
+        // =======================================
+
+        /// <summary>
+        /// Affiche dans la console tous les dominos actuellement posés sur la table de jeu,
+        /// séparés par des tirets.
+        /// </summary>
+        /// <param name="table">Le tableau des dominos posés sur la table.</param>
+        /// <param name="nbDominosTable">Le nombre de dominos actuellement posés sur la table.</param>
+        public static void afficherTable(string[] table, int nbDominosTable)
+        {
+            Console.WriteLine("\n=== TABLE DE JEU ===");
+
+            for (int i = 0; i < nbDominosTable; i++)
+            {
+                Console.Write(table[i]);
+
+                if (i < nbDominosTable - 1)
+                {
+                    Console.Write(" - ");
+                }
+            }
+
+            Console.WriteLine("\n");
+        }
 
     }
 }

@@ -4,7 +4,7 @@ namespace UAA9_CODE
 {
     public class Program
     {
-        public static void Main(string[] args)
+        static void Main()
         {
             string reponse;
 
@@ -191,6 +191,23 @@ namespace UAA9_CODE
                 }
 
                 // =======================================
+                // TABLE DE JEU
+                // =======================================
+
+                string[] table = new string[28];
+                int nbDominosTable = 0;
+
+                table[0] = mainJoueur[0];
+                nbDominosTable++;
+
+                for (int i = 0; i < nbDominosJoueur - 1; i++)
+                {
+                    mainJoueur[i] = mainJoueur[i + 1];
+                }
+
+                nbDominosJoueur--;
+
+                // =======================================
                 // FIN DE PARTIE
                 // =======================================
 
@@ -198,6 +215,19 @@ namespace UAA9_CODE
 
                 while (!partieTerminee)
                 {
+                    Console.Clear();
+
+                    Fonctions.afficherTable(table, nbDominosTable);
+
+                    Console.WriteLine("Votre main :");
+
+                    for (int i = 0; i < nbDominosJoueur; i++)
+                    {
+                        Console.Write(i + " : " + mainJoueur[i] + "  ");
+                    }
+
+                    Console.WriteLine();
+
                     if (nbDominosJoueur == 0)
                     {
                         Console.WriteLine("\nVous avez gagné !");
