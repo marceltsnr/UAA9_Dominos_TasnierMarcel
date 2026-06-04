@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" version="3.24" text="&#34;choisirDominoRobot&#34;" comment="&#34;Retourne l'indice du domino choisi ou -1&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;int[] indicesValides = new int[nbDominos]&#34;" comment="" color="ffffff" rotated="0"></instruction>
+		<instruction text="&#34;int nbValides = 0&#34;" comment="" color="ffffff" rotated="0"></instruction>
+		<for text="&#34;pour i de 0 à nbDominos-1&#34;" comment="" counterVar="dummy_counter" startValue="i de 0" endValue="nbDominos-1" stepConst="1" reliable="false" color="ffffff">
+			<qFor>
+				<alternative text="&#34;si dominoValide(mainsRobots[indexRobot,i], table, nbDominosTable)&#34;" comment="" color="ffffff">
+					<qTrue>
+						<instruction text="&#34;indicesValides[nbValides] = i&#34;" comment="" color="ffffff" rotated="0"></instruction>
+						<instruction text="&#34;nbValides++&#34;" comment="" color="ffffff" rotated="0"></instruction>
+					</qTrue>
+					<qFalse>
+					</qFalse>
+				</alternative>
+			</qFor>
+		</for>
+		<alternative text="&#34;si nbValides == 0&#34;" comment="" color="ffffff">
+			<qTrue>
+				<instruction text="&#34;retourner -1&#34;" comment="" color="ffffff" rotated="0"></instruction>
+			</qTrue>
+			<qFalse>
+				<alternative text="&#34;si niveauRobot == 1&#34;" comment="" color="ffffff">
+					<qTrue>
+						<instruction text="&#34;retourner indicesValides[generateur.Next(nbValides)]&#34;" comment="" color="ffffff" rotated="0"></instruction>
+					</qTrue>
+					<qFalse>
+						<alternative text="&#34;si niveauRobot == 2&#34;" comment="" color="ffffff">
+							<qTrue>
+								<for text="&#34;pour i de 0 à nbValides-1&#34;" comment="" counterVar="dummy_counter" startValue="i de 0" endValue="nbValides-1" stepConst="1" reliable="false" color="ffffff">
+									<qFor>
+										<instruction text="&#34;string domino = mainsRobots[indexRobot, indicesValides[i]]&#34;" comment="" color="ffffff" rotated="0"></instruction>
+										<instruction text="&#34;int gaucheD = int.Parse(domino[1].ToString())&#34;" comment="" color="ffffff" rotated="0"></instruction>
+										<instruction text="&#34;int droiteD = int.Parse(domino[3].ToString())&#34;" comment="" color="ffffff" rotated="0"></instruction>
+										<alternative text="&#34;si gaucheD == droiteD&#34;" comment="" color="ffffff">
+											<qTrue>
+												<instruction text="&#34;retourner indicesValides[i]&#34;" comment="" color="ffffff" rotated="0"></instruction>
+											</qTrue>
+											<qFalse>
+											</qFalse>
+										</alternative>
+									</qFor>
+								</for>
+								<instruction text="&#34;retourner indicesValides[generateur.Next(nbValides)]&#34;" comment="" color="ffffff" rotated="0"></instruction>
+							</qTrue>
+							<qFalse>
+								<alternative text="&#34;si niveauRobot == 3&#34;" comment="" color="ffffff">
+									<qTrue>
+										<instruction text="&#34;int meilleurIndex = indicesValides[0]&#34;" comment="" color="ffffff" rotated="0"></instruction>
+										<instruction text="&#34;int meilleureValeur = -1&#34;" comment="" color="ffffff" rotated="0"></instruction>
+										<for text="&#34;pour i de 0 à nbValides-1&#34;" comment="" counterVar="dummy_counter" startValue="i de 0" endValue="nbValides-1" stepConst="1" reliable="false" color="ffffff">
+											<qFor>
+												<instruction text="&#34;string domino = mainsRobots[indexRobot, indicesValides[i]]&#34;" comment="" color="ffffff" rotated="0"></instruction>
+												<instruction text="&#34;int gaucheD = int.Parse(domino[1].ToString())&#34;" comment="" color="ffffff" rotated="0"></instruction>
+												<instruction text="&#34;int droiteD = int.Parse(domino[3].ToString())&#34;" comment="" color="ffffff" rotated="0"></instruction>
+												<instruction text="&#34;int somme = gaucheD + droiteD&#34;" comment="" color="ffffff" rotated="0"></instruction>
+												<alternative text="&#34;si somme &#62; meilleureValeur&#34;" comment="" color="ffffff">
+													<qTrue>
+														<instruction text="&#34;meilleureValeur = somme&#34;" comment="" color="ffffff" rotated="0"></instruction>
+														<instruction text="&#34;meilleurIndex = indicesValides[i]&#34;" comment="" color="ffffff" rotated="0"></instruction>
+													</qTrue>
+													<qFalse>
+													</qFalse>
+												</alternative>
+											</qFor>
+										</for>
+										<instruction text="&#34;retourner meilleurIndex&#34;" comment="" color="ffffff" rotated="0"></instruction>
+									</qTrue>
+									<qFalse>
+										<instruction text="&#34;retourner indicesValides[0]&#34;" comment="" color="ffffff" rotated="0"></instruction>
+									</qFalse>
+								</alternative>
+							</qFalse>
+						</alternative>
+					</qFalse>
+				</alternative>
+			</qFalse>
+		</alternative>
+	</children>
+</root>

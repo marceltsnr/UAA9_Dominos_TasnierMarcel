@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" version="3.24" text="&#34;robotPeutJouer&#34;" comment="&#34;Vérifie si le robot peut jouer au moins un domino de sa main&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<for text="&#34;pour i de 0 à nbDominos-1&#34;" comment="" counterVar="dummy_counter" startValue="i de 0" endValue="nbDominos-1" stepConst="1" reliable="false" color="ffffff">
+			<qFor>
+				<alternative text="&#34;si dominoValide(mainsRobots[indexRobot, i], table, nbDominosTable)&#34;" comment="" color="ffffff">
+					<qTrue>
+						<instruction text="&#34;retourner true&#34;" comment="" color="ffffff" rotated="0"></instruction>
+					</qTrue>
+					<qFalse>
+					</qFalse>
+				</alternative>
+			</qFor>
+		</for>
+		<instruction text="&#34;retourner false&#34;" comment="" color="ffffff" rotated="0"></instruction>
+	</children>
+</root>

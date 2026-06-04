@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" version="3.24" text="&#34;compterDominosRobot&#34;" comment="&#34;Retourne le nombre de dominos en main du robot&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<instruction text="&#34;int count = 0&#34;" comment="" color="ffffff" rotated="0"></instruction>
+		<for text="&#34;pour i de 0 à tailleMax-1&#34;" comment="" counterVar="dummy_counter" startValue="i de 0" endValue="tailleMax-1" stepConst="1" reliable="false" color="ffffff">
+			<qFor>
+				<alternative text="&#34;si mainsRobots[indexRobot, i] != null&#34;" comment="" color="ffffff">
+					<qTrue>
+						<instruction text="&#34;count++&#34;" comment="" color="ffffff" rotated="0"></instruction>
+					</qTrue>
+					<qFalse>
+					</qFalse>
+				</alternative>
+			</qFor>
+		</for>
+		<instruction text="&#34;retourner count&#34;" comment="" color="ffffff" rotated="0"></instruction>
+	</children>
+</root>

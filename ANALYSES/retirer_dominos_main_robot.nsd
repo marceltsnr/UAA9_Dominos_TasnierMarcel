@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root xmlns:nsd="http://structorizer.fisch.lu/" version="3.24" text="&#34;retirer dominos main robot&#34;" comment="&#34;&#34;" color="ffffff" type="program" style="nice">
+	<children>
+		<for text="&#34;for (int i = indexDomino; i &#60; nbDominos - 1; i++)&#34;" comment="&#34;&#34;" counterVar="dummy_counter" startValue="for (int i == indexDomino; i &#60; nbDominos - 1; i++)" stepConst="1" reliable="false" color="ffffff">
+			<qFor>
+				<instruction text="&#34;mainsRobots[indexRobot, i] = mainsRobots[indexRobot, i + 1]&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+			</qFor>
+		</for>
+		<instruction text="&#34;mainsRobots[indexRobot, nbDominos - 1] = null&#34;,&#34;nbDominos--&#34;" comment="&#34;&#34;" color="ffffff" rotated="0"></instruction>
+	</children>
+</root>
